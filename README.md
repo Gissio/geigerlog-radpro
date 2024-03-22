@@ -23,8 +23,8 @@ To log live data:
 * "CPS" data is the low-level counts per second value. This value is not averaged.
 * Click on the "Stop Log" to stop logging.
 
-You can also log data by creating or opening a log database by clicking on the "Log DB" button, and clicking then "Start Log".
+You can also log data by creating or opening a log database by clicking on the "Log DB" button, and then clicking on "Start Log".
 
-To download datalogs from Rad Pro's memory:
+To download datalogs from Rad Pro's flash memory:
 
 * In the "History" menu, select "Rad Pro Series" and "Get New History From Device ..." (to download only new datalog records) or "Get All History From Device ..." (to download the entire datalog history).
