@@ -321,22 +321,23 @@ def getValuesRadPro(varlist):
 
         elif key == "CPS":
             cpsTime = datetime.datetime.now().timestamp()
-            tubePulseCount = gglobs.RadProDevice.query("GET tubePulseCount")
-            if tubePulseCount != None:
-                cpsPulseCount = float(tubePulseCount)
+            cpsPulseCountString = gglobs.RadProDevice.query(
+                "GET tubePulseCount")
+            if cpsPulseCountString != None:
+                cpsPulseCount = float(cpsPulseCountString)
             else:
                 cpsPulseCount = None
 
-            if gglobs.RadProDevice.lastCPSTime != None and\
-                    cpsPulseCount != None:
-                deltaTime = cpsTime - gglobs.RadProDevice.lastCPSTime
-                deltaPulseCount = cpsPulseCount - gglobs.RadProDevice.lastCPSPulseCount
+            if cpsPulseCount != None:
+                if gglobs.RadProDevice.lastCPSPulseCount != None:
+                    cpsDeltaTime = cpsTime - gglobs.RadProDevice.lastCPSTime
+                    cpsDeltaPulseCount = cpsPulseCount - gglobs.RadProDevice.lastCPSPulseCount
 
-                if abs(deltaTime - gglobs.logCycle) < 2:
-                    value = deltaPulseCount / deltaTime
+                    if abs(cpsDeltaTime - gglobs.logCycle) < 5:
+                        value = cpsDeltaPulseCount / cpsDeltaTime
 
-            gglobs.RadProDevice.lastCPSTime = cpsTime
-            gglobs.RadProDevice.lastCPSPulseCount = cpsPulseCount
+                gglobs.RadProDevice.lastCPSTime = cpsTime
+                gglobs.RadProDevice.lastCPSPulseCount = cpsPulseCount
 
         if value != None:
             values[key] = value
