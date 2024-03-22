@@ -4,7 +4,7 @@ This is a modification of [GeigerLog 1.4.3](https://sourceforge.net/projects/gei
 
 ## Installation
 
-If you use Windows, simply download the latest binary from the [releases](releases), uncompress it and execute the `geigerlog.bat` file.
+If you use Windows, simply download the latest binary from the [releases](https://github.com/Gissio/geigerlog-radpro/releases), uncompress it and execute the `geigerlog.bat` file.
 
 If you use Linux or macOS, follow the installation instructions from the [manual](docs/GeigerLog-Manual-v1.4.1.pdf) and run `src/geigerlog`.
 
