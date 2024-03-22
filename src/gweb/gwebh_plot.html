@@ -1,0 +1,78 @@
+<!--Web Page Plot-->
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="/css">
+<link rel="icon" type="image/png" href="/favicon.ico" sizes="16x16">
+<style>
+    div     {max-width:360px; margin:auto;}
+    td,th   {padding:8px 0px 8px 3px; font-size:20px; }
+    th      {font-weight:900;}
+    p       {margin-bottom:0px; font-weight:normal;}
+    iframe  {width:360px; height:250px; margin-bottom:0px; border:0px solid black; }
+</style>
+<title></title>
+INSERTHTMLMENU
+<div style="margin:0px auto 0px auto; padding:0px;" >
+    <iframe id="iframetop"></iframe>
+</div>
+
+<div style = "margin-top:0px; margin-bottom:16px; padding:5px 0px 6px 0px; border:1px solid black;">
+    <label style="font-size:15px;" for="topvar">Top:</label>
+    <select style="font-size:15px; font-weight:bold; width:110px;" name="topvar" id="topvar" >
+        <option value="CPM"   >CPM   </option>
+        <option value="CPS"   >CPS   </option>
+        <option value="CPM1st">CPM1st</option>
+        <option value="CPS1st">CPS1st</option>
+        <option value="CPM2nd">CPM2nd</option>
+        <option value="CPS2nd">CPS2nd</option>
+        <option value="CPM2nd">CPM3rd</option>
+        <option value="CPS2nd">CPS3rd</option>
+        <option value="Temp"  >Temp  </option>
+        <option value="Press" >Press </option>
+        <option value="Humid" >Humid </option>
+        <option value="Xtra"  >Xtra  </option>
+    </select>
+
+    <label style="font-size:15px;" for="bottomvar">Bottom:</label>
+    <select style="font-size:15px; font-weight:bold; width:110px;" name="bottomvar" id="bottomvar" >
+        <option value="CPM"   >CPM   </option>
+        <option value="CPS"   >CPS   </option>
+        <option value="CPM1st">CPM1st</option>
+        <option value="CPS1st">CPS1st</option>
+        <option value="CPM2nd">CPM2nd</option>
+        <option value="CPS2nd">CPS2nd</option>
+        <option value="CPM2nd">CPM3rd</option>
+        <option value="CPS2nd">CPS3rd</option>
+        <option value="Temp"  >Temp  </option>
+        <option value="Press" >Press </option>
+        <option value="Humid" >Humid </option>
+        <option value="Xtra"  >Xtra  </option>
+    </select>
+
+    <!-- <label style="font-size:15px;" for="durlen">Rec Length [min]:</label>
+    <input type="text" id="durlen" size="3"> -->
+    <!-- <br>
+    <label style="font-size:15px;" for="reclen">Data Rec:</label>
+    <select style="font-size:15px; font-weight:bold; width:110px;" id="datarec" >
+        <option             value="rl1"   >1 min   </option>
+        <option             value="rl3"   >3 min   </option>
+        <option selected    value="rl10"  >10 min  </option>
+        <option             value="rl30"  >30 min  </option>
+        <option             value="rl100" >100 min </option>
+    </select> -->
+
+    <div style="font-size:15px; ">
+        Showing last: <span style="font-size:20px; font-weight:bold;" id="reclen"></span> &nbsp; &nbsp; &nbsp; &nbsp;
+        <button style="font-size:15px; margin-top:10px;" id='mplgraph'  type='button' onclick="location.href='/glpng'">
+            Get GL Graph
+        </button>
+    </div>
+
+
+</div>
+
+<div>
+    <iframe id="iframebottom"></iframe>
+</div>

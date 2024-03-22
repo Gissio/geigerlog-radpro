@@ -1,0 +1,16 @@
+# Linux UDEV rules to activate MiniMon device
+#
+# To activate use command:   sudo udevadm control --reload-rules
+# then unplug and replug MiniMon
+
+ACTION=="remove", GOTO="minimon_end"
+
+# Use this line if you have only a single MiniMon
+# The name /dev/minimon will never change
+SUBSYSTEMS=="usb", KERNEL=="hidraw*", ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="a052", GROUP="plugdev", MODE="0660", SYMLINK+="minimon", GOTO="minimon_end"
+
+# Use this line if you have several MiniMons.
+# The name /dev/minimon will be attached with numbers depending on the hidraw dev it is linked to, like: /dev/minimon1, /dev/minimon2, etc
+#SUBSYSTEMS=="usb", KERNEL=="hidraw*", ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="a052", GROUP="plugdev", MODE="0660", SYMLINK+="co2mini%n", GOTO="minimon_end"
+
+LABEL="minimon_end"

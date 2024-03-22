@@ -1,0 +1,57 @@
+<!-- Web Page mon -->
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="/css">
+<link rel="icon" type="image/png" href="/favicon.ico" sizes="16x16">
+<style>
+    div {max-width:380px; margin:auto;}
+    p   {margin-bottom:0px; font-weight:normal;}
+    #cpm, #cps, #usv, #temp, #press, #humid, #xtra, #varvalue {font-size:26px; font-weight:bold;}
+</style>
+<title></title>
+INSERTHTMLMENU
+<div >
+    <div class="gauge-container" style="border:0px solid red; margin:2px;">
+        <style>
+            .gauge g.label text{text-anchor:middle;font-size:15px;font-weight:700;fill:#666; }
+        </style>
+        <div style="background-color:#ebebeb; height:200px; padding-top:5px;" id="gauge"></div>
+
+        <div style="background-color:#ebebeb; ">
+            <select style="font-size:26px; font-weight:bold; " id="vars" >
+            <option value="CPM"   >CPM   </option>
+            <option selected value="CPM1st">CPM1st</option>
+            <option value="CPM2nd">CPM2nd</option>
+            <option value="CPM2nd">CPM3rd</option>
+            </select>
+            <script>
+                var VarIndex = document.getElementById("vars").selectedIndex;
+            </script>
+        </div>
+
+        <table style="width:100%; border:1px solid #ebebeb;">
+            <tr><td style="width:40%;padding-top:5px;">CPM
+                <td style="width:30%;padding-top:5px;">CPS
+                <td style="padding-top:5px;"          >DR [µSv/h]
+
+            <tr><td id="cpm"          >-
+                <td id="cps"          >-
+                <td id="usv"          >-
+        </table>
+
+        <table  style="width:100%; border:1px solid #ebebeb;">
+            <tr><td style="width:50%;padding-top:5px;">Temperature [°C]
+                <td style="padding-top:5px;"          >Humidity [%]
+            <tr><td id="temp"         >-
+                <td id="humid"        >-
+            <tr><td style="padding-top:5px;"          >Pressure [hPa]
+                <td style="padding-top:5px;"          >Xtra [Units]
+            <tr><td id="press"        >-
+                <td id="xtra"         >-
+        </table>
+    </div>
+</div>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
