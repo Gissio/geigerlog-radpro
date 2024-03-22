@@ -1,30 +1,35 @@
 # geigerlog-radpro
 
-This is a modification of [GeigerLog 1.4.3](https://sourceforge.net/projects/geigerlog/) that enables live data logging and history download from Rad Pro devices.
+This is a modification of [GeigerLog 1.4.3](https://sourceforge.net/projects/geigerlog/) that enables live data logging and datalog download for [Rad Pro](https://github.com/Gissio/radpro) devices.
 
 ## Installation
 
-If you use Windows, simply download the latest binary from the [releases](https://github.com/Gissio/geigerlog-radpro/releases), uncompress it and execute the `geigerlog.bat` file.
+If you use Windows, simply download the latest binary from the [releases](https://github.com/Gissio/geigerlog-radpro/releases) and decompress it.
 
-If you use Linux or macOS, follow the installation instructions from the [manual](docs/GeigerLog-Manual-v1.4.1.pdf) and run `src/geigerlog`.
+If you use Linux or macOS, follow the installation instructions in the [GeigerLog manual](docs/GeigerLog-Manual-v1.4.1.pdf).
 
 ## Use
 
+Starting GeigerLog:
+
+* If you use Windows, start `geigerlog.bat`.
+* If you use Linux or macOS, start `src/geigerlog`.
+
 To connect to a Rad Pro device:
 
-* Start GeigerLog.
 * Connect the Rad Pro device to your computer.
 * Click on the second icon of the toolbar, or select "Connect Devices ..." from the "Device" menu.
+* The device's clock is automatically synchronized to your computer's clock.
 
-To log live data:
+To live log data:
 
-* Click on the "Quick Log" button to start logging data.
+* Click on the "Quick Log" button to start logging.
 * "CPM" data is Rad Pro's instantaneous counts per minute value. This value is averaged through Rad Pro's adaptive averaging algorithm.
 * "CPS" data is the low-level counts per second value. This value is not averaged.
-* Click on the "Stop Log" to stop logging.
+* Click on the "Stop Log" button to stop logging.
 
-You can also log data by creating or opening a log database by clicking on the "Log DB" button, and then clicking on "Start Log".
+You can also live log data by creating or opening a log database: click on "Log DB" button, select the file name for your log database, and then click on "Start Log".
 
 To download datalogs from Rad Pro's flash memory:
 
-* In the "History" menu, select "Rad Pro Series" and "Get New History From Device ..." (to download only new datalog records) or "Get All History From Device ..." (to download the entire datalog history).
+* In the "History" menu, select "Rad Pro Series" and "Get New History From Device ..." to download only new (not yet downloaded) datalog records, or "Get All History From Device ..." to download the entire datalog.

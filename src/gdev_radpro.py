@@ -297,7 +297,6 @@ def getInfoRadPro(extended=False):
         info += "Device connected.\n"
 
         deviceInfo = gglobs.RadProDevice.getInfo()
-        deviceInfo |= gglobs.RadProDevice.getExtendedInfo()
 
         for key, value in deviceInfo.items():
             info += f"{key:<32}: {value}\n"
