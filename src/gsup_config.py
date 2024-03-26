@@ -1388,6 +1388,11 @@ def readGeigerLogConfig():
                 else:                                   gglobs.RadProPort = t
                 dprint(infostr.format("Serial Port",    gglobs.RadProPort))
 
+            t = getConfigEntry("RadProDevice", "RadProSyncTime", "str" )
+            if t != "WARNING":
+                gglobs.RadProSyncTime = t
+                dprint(infostr.format("Sync Time",      gglobs.RadProPort))
+
 
         break # still in while loop, don't forget to break!
 

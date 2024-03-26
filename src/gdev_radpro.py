@@ -34,8 +34,8 @@ class RadProDevice:
                                         baudrate=115200,
                                         timeout=0.25)
 
-        except Exception:
-            dprint(f"Could not open port {self.port}.")
+        except Exception as e:
+            dprint(f"Could not open port {self.port}: {e}")
 
             return False
 
@@ -53,9 +53,9 @@ class RadProDevice:
 
         self.id = self.hardwareId + ";" + self.deviceId
 
-        timestamp = int(datetime.datetime.now().timestamp())
-        if self.query(f"SET deviceTime {str(timestamp)}") == None:
-            return False
+        if gglobs.RadProSyncTime == "yes":
+            timestamp = int(datetime.datetime.now().timestamp())
+            self.query(f"SET deviceTime {str(timestamp)}")
 
         return True
 
@@ -67,7 +67,7 @@ class RadProDevice:
             self.serial = None
 
         except Exception as e:
-            dprint(f"Could not close port {self.port}.")
+            dprint(f"Could not close port {self.port}: {e}")
 
     def query(self, request):
         dprint(f"Rad Pro device request: \"{request}\".")
@@ -139,7 +139,8 @@ class RadProDevice:
                 self.query("GET tubeTime")),
             "Tube life pulse count": str(
                 self.query("GET tubePulseCount")),
-            "Tube rate": str(self.query("GET tubeRate")) + " CPM",
+            "Tube rate": str(
+                self.query("GET tubeRate")) + " CPM",
             "Tube conversion factor": str(
                 self.query("GET tubeConversionFactor")) + " CPM/µSv/h",
             "Tube dead time": str(
@@ -171,22 +172,31 @@ class RadProDevice:
 
             values = record.split(",")
 
-            record_time = int(values[0])
-            record_pulse_count = int(values[1])
+            if len(values) != 2:
+                dprint("Entry '" + record + "' malformed.")
 
-            if last_pulse_count != None:
-                delta_time = record_time - last_time
-                delta_pulse_count = record_pulse_count - last_pulse_count
+                continue
 
-                if delta_time > 0 and last_delta_time == delta_time:
-                    cpm = delta_pulse_count * 60 / delta_time
+            try:
+                record_time = int(values[0])
+                record_pulse_count = int(values[1])
 
-                    datalog.append([record_time, cpm])
+                if last_pulse_count != None:
+                    delta_time = record_time - last_time
+                    delta_pulse_count = record_pulse_count - last_pulse_count
 
-                last_delta_time = delta_time
+                    if delta_time > 0 and last_delta_time == delta_time:
+                        cpm = delta_pulse_count * 60 / delta_time
 
-            last_time = record_time
-            last_pulse_count = record_pulse_count
+                        datalog.append([record_time, cpm])
+
+                    last_delta_time = delta_time
+
+                last_time = record_time
+                last_pulse_count = record_pulse_count
+
+            except Exception as e:
+                dprint("Error while parsing datalog entry: " + e)
 
         return datalog
 
@@ -199,11 +209,12 @@ def loadDeviceHistoryDataRadPro():
 
         for line in file:
             parts = line.strip().split(",")
+
             if len(parts) >= 2:
                 values[parts[0]] = parts[1]
 
-    except:
-        pass
+    except Exception as e:
+        dprint("Error while loading device history data: " + e)
 
     return values
 
@@ -314,33 +325,40 @@ def getValuesRadPro(varlist):
     for key in varlist:
         value = None
 
-        if key == "CPM":
-            cpm = gglobs.RadProDevice.query("GET tubeRate")
-            if cpm != None:
-                value = float(cpm)
+        try:
+            if key == "CPM":
+                cpm = gglobs.RadProDevice.query("GET tubeRate")
+                if cpm != None:
+                    value = float(cpm)
 
-        elif key == "CPS":
-            cpsTime = datetime.datetime.now().timestamp()
-            cpsPulseCountString = gglobs.RadProDevice.query(
-                "GET tubePulseCount")
-            if cpsPulseCountString != None:
-                cpsPulseCount = float(cpsPulseCountString)
-            else:
-                cpsPulseCount = None
+            elif key == "CPS":
+                cpsTime = datetime.datetime.now().timestamp()
+                cpsPulseCountString = gglobs.RadProDevice.query(
+                    "GET tubePulseCount")
+                if cpsPulseCountString != None:
+                    cpsPulseCount = float(cpsPulseCountString)
+                else:
+                    cpsPulseCount = None
 
-            if cpsPulseCount != None:
-                if gglobs.RadProDevice.lastCPSPulseCount != None:
-                    cpsDeltaTime = cpsTime - gglobs.RadProDevice.lastCPSTime
-                    cpsDeltaPulseCount = cpsPulseCount - gglobs.RadProDevice.lastCPSPulseCount
+                if cpsPulseCount != None:
+                    if gglobs.RadProDevice.lastCPSPulseCount != None:
+                        cpsDeltaTime = cpsTime - gglobs.RadProDevice.lastCPSTime
+                        cpsDeltaPulseCount = cpsPulseCount - gglobs.RadProDevice.lastCPSPulseCount
 
-                    if abs(cpsDeltaTime - gglobs.logCycle) < 5:
-                        value = cpsDeltaPulseCount / cpsDeltaTime
+                        if abs(cpsDeltaTime - gglobs.logCycle) < 5:
+                            if cpsDeltaTime < 1:
+                                cpsDeltaTime = 1
 
-                gglobs.RadProDevice.lastCPSTime = cpsTime
-                gglobs.RadProDevice.lastCPSPulseCount = cpsPulseCount
+                            value = cpsDeltaPulseCount / round(cpsDeltaTime)
 
-        if value != None:
-            values[key] = value
+                    gglobs.RadProDevice.lastCPSTime = cpsTime
+                    gglobs.RadProDevice.lastCPSPulseCount = cpsPulseCount
+
+            if value != None:
+                values[key] = value
+
+        except Exception as e:
+            dprint("Error while parsing values: " + e)
 
     return values
 
