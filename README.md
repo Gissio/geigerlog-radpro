@@ -13,7 +13,7 @@ If you use Linux or macOS, follow the installation instructions in the [GeigerLo
 Starting GeigerLog:
 
 * If you use Windows, start `geigerlog.bat`.
-* If you use Linux or macOS, start `src/geigerlog`.
+* If you use Linux or macOS, start `src/geigerlog.py`.
 
 To connect to a Rad Pro device:
 
@@ -24,8 +24,7 @@ To connect to a Rad Pro device:
 To live log data:
 
 * Click on the "Quick Log" button to start logging.
-* "CPM" data is Rad Pro's instantaneous counts per minute value. This value is averaged through Rad Pro's adaptive averaging algorithm.
-* "CPS" data is the low-level counts per second value. This value is not averaged.
+* "CPS" data is the low-level counts per second value.
 * Click on the "Stop Log" button to stop logging.
 
 You can also live log data by creating or opening a log database: click on "Log DB" button, select the file name for your log database, and then click on "Start Log".

@@ -35,7 +35,7 @@ class RadProDevice:
                                         timeout=0.25)
 
         except Exception as e:
-            dprint(f"Could not open port {self.port}: {e}")
+            dprint(f"Could not open port {self.port}: {str(e)}")
 
             return False
 
@@ -67,7 +67,7 @@ class RadProDevice:
             self.serial = None
 
         except Exception as e:
-            dprint(f"Could not close port {self.port}: {e}")
+            dprint(f"Could not close port {self.port}: {str(e)}")
 
     def query(self, request):
         dprint(f"Rad Pro device request: \"{request}\".")
@@ -76,7 +76,7 @@ class RadProDevice:
             self.serial.write(request.encode("ascii") + b"\n")
 
         except Exception as e:
-            dprint(f"Could not make Rad Pro device request: {e}.")
+            dprint(f"Could not make Rad Pro device request: {str(e)}.")
 
             self.close()
 
@@ -89,7 +89,7 @@ class RadProDevice:
                 data = self.serial.readline().decode("ascii")
 
             except Exception as e:
-                dprint(f"Could not receive Rad Pro device response: {e}.")
+                dprint(f"Could not receive Rad Pro device response: {str(e)}.")
 
                 self.close()
 
@@ -147,6 +147,8 @@ class RadProDevice:
                 self.query("GET tubeDeadTime")) + " s",
             "Tube dead-time compensation": str(
                 self.query("GET tubeDeadTimeCompensation")) + " s",
+            "Tube background compensation": str(
+                self.query("GET tubeBackgroundCompensation")) + " CPM",
             "Tube HV PWM frequency": str(
                 self.query("GET tubeHVFrequency")) + " Hz",
             "Tube HV PWM duty cycle": str(
@@ -196,7 +198,7 @@ class RadProDevice:
                 last_pulse_count = record_pulse_count
 
             except Exception as e:
-                dprint("Error while parsing datalog entry: " + e)
+                dprint("Error while parsing datalog entry: " + str(e))
 
         return datalog
 
@@ -205,7 +207,7 @@ def loadDeviceHistoryDataRadPro():
     values = {}
 
     try:
-        file = open("geigerlog-radpro-history.conf")
+        file = open("geigerlog-radpro-history.conf", "rt")
 
         for line in file:
             parts = line.strip().split(",")
@@ -214,7 +216,7 @@ def loadDeviceHistoryDataRadPro():
                 values[parts[0]] = parts[1]
 
     except Exception as e:
-        dprint("Error while loading device history data: " + e)
+        dprint("Error while loading device history data: " + str(e))
 
     return values
 
@@ -264,7 +266,7 @@ def initRadPro():
         errmsg = "A Rad Pro device was not detected."
 
     # Configuration
-    setLoggableVariables("Rad Pro", "CPM, CPS")
+    setLoggableVariables("Rad Pro", "CPS")
     updatePropertiesRadPro()
 
     # Finished initialization
@@ -326,12 +328,7 @@ def getValuesRadPro(varlist):
         value = None
 
         try:
-            if key == "CPM":
-                cpm = gglobs.RadProDevice.query("GET tubeRate")
-                if cpm != None:
-                    value = float(cpm)
-
-            elif key == "CPS":
+            if key == "CPS":
                 cpsTime = datetime.datetime.now().timestamp()
                 cpsPulseCountString = gglobs.RadProDevice.query(
                     "GET tubePulseCount")
@@ -358,7 +355,7 @@ def getValuesRadPro(varlist):
                 values[key] = value
 
         except Exception as e:
-            dprint("Error while parsing values: " + e)
+            dprint("Error while parsing values: " + str(e))
 
     return values
 

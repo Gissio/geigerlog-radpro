@@ -308,13 +308,13 @@ def getProgName():
 def getProgPath():
     """Return full path of the program directory"""
 
-    # +++
+    # +++ TEST
     # Patch for packaging geigerlog with pyinstaller:
     #
-    # dp = os.path.dirname(os.path.realpath(__file__))
+    dp = os.path.dirname(os.path.realpath(__file__))
     #
-    dp = os.path.dirname(os.path.realpath(os.getcwd()))
-    # +++
+    # dp = os.path.dirname(os.path.realpath(os.getcwd()))
+    # +++ TEST
     return dp
 
 
