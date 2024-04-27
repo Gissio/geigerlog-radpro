@@ -311,9 +311,9 @@ def getProgPath():
     # +++ TEST
     # Patch for packaging geigerlog with pyinstaller:
     #
-    dp = os.path.dirname(os.path.realpath(__file__))
+    # dp = os.path.dirname(os.path.realpath(__file__))
     #
-    # dp = os.path.dirname(os.path.realpath(os.getcwd()))
+    dp = os.getcwd()
     # +++ TEST
     return dp
 
