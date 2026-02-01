@@ -8,11 +8,11 @@ This was a community fork/patch of GeigerLog (based on version 1.4.3) that added
 
 Please use the current official release instead:
 
-→ **Latest GeigerLog**: https://sourceforge.net/projects/geigerlog/
+**Latest GeigerLog**: https://sourceforge.net/projects/geigerlog/
 
 For questions, bug reports, feature requests, or help with Rad Pro devices in GeigerLog, please use the official discussion forum:
 
-→ **GeigerLog Discussion**: https://sourceforge.net/p/geigerlog/discussion/
+**GeigerLog Discussion**: https://sourceforge.net/p/geigerlog/discussion/
 
 ## Installation
 
@@ -44,4 +44,5 @@ You can also live log data by creating or opening a log database: click on “Lo
 To download datalogs from Rad Pro's flash memory:
 
 * In the “History” menu, select “Rad Pro Series” and “Get New History From Device ...” to download only new (not yet downloaded) datalog records, or “Get All History From Device ...” to download the entire datalog.
+
 
